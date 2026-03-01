@@ -19,7 +19,7 @@ const links = [
   {
     icon: FaGithub,
     label: 'GitHub',
-    href: 'https://github.com/diceroll123/neopetsbackup',
+    href: 'https://github.com/rneopets/neopetsbackup',
   },
 ];
 
@@ -103,7 +103,7 @@ const GitCommit = () => {
       Commit:{' '}
       {commitHash !== 'development' ? (
         <Link
-          href={`https://github.com/diceroll123/neopetsbackup/commit/${commitHash}`}
+          href={`https://github.com/rneopets/neopetsbackup/commit/${commitHash}`}
           target="_blank"
           rel="noopener noreferrer"
         >
