@@ -93,7 +93,6 @@ const SavedPets = props => {
                   <>
                     {done ? (
                       <HStack spacing={2}>
-                        <Badge colorScheme="green">SUCCESS</Badge>
                         {bytes > 0 ? (
                           <Badge colorScheme="blue">
                             <Icon boxSize="14px" as={FaFileArchive} mr={1} />
