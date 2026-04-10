@@ -467,7 +467,8 @@ const HistorySidebar = ({
                     <PopoverContent width="auto" maxW="250px">
                       <PopoverBody fontSize="sm" p={3}>
                         Due to limitations, we can't know if the current
-                        appearance has already been downloaded.
+                        appearance has already been saved until you try to save
+                        again. We won't keep duplicate entries below!
                       </PopoverBody>
                     </PopoverContent>
                   </Portal>
