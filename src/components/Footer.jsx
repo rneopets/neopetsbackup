@@ -72,30 +72,8 @@ const FooterButtons = props => {
   );
 };
 
-const VercelCredit = () => {
-  return (
-    <Box
-      fontSize="sm"
-      fontWeight="semibold"
-      display="inline-block"
-      bg="black"
-      color="white"
-      px="4"
-      py="2"
-      rounded="lg"
-    >
-      Deployed by{' '}
-      <span role="img" aria-label="Vercel logo">
-        ▲
-      </span>{' '}
-      Vercel
-    </Box>
-  );
-};
-
 const GitCommit = () => {
-  const commitHash =
-    process.env.REACT_APP_VERCEL_GIT_COMMIT_SHA || 'development';
+  const commitHash = process.env.REACT_APP_COMMIT_SHA || 'development';
   const shortHash = commitHash.substring(0, 7);
 
   return (
@@ -142,7 +120,6 @@ export const Footer = () => {
         <Copyright alignSelf={{ base: 'center', sm: 'start' }} />
 
         <VStack>
-          <VercelCredit />
           <GitCommit />
         </VStack>
       </Stack>

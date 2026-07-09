@@ -10,7 +10,6 @@
     "@testing-library/react": "^10.4.9",
     "@testing-library/user-event": "^14.6.1",
     "@zip.js/zip.js": "^2.8.21",
-    "axios": "1.13.4",
     "framer-motion": "^4.1.17",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -20,8 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "vercel-build": "node vercel-build.js && react-scripts build",
+    "build": "node scripts/write-commit-sha.js && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
