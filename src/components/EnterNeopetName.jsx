@@ -23,7 +23,11 @@ const EnterNeopetName = props => {
   const blue = useColorModeValue('blue.300', 'blue.500');
 
   return (
-    <HStack spacing={3} justify="center">
+    <HStack
+      spacing={3}
+      justify="center"
+      flexWrap={{ base: 'wrap', sm: 'nowrap' }}
+    >
       <Image
         src={`http://pets.neopets.com/cpn/${petName}/1/6.png`}
         title={petName}
@@ -37,7 +41,7 @@ const EnterNeopetName = props => {
         onLoad={() => setCanDownload(true)}
       />
       <Input
-        width={{ base: '200px', md: '400px', lg: '500px' }}
+        width={{ base: '140px', sm: '200px', md: '400px', lg: '500px' }}
         borderColor={green}
         value={petName}
         onChange={handlePetNameChange}
