@@ -25,7 +25,7 @@ const EnterNeopetName = props => {
 
   return (
     <Stack
-      direction={{ base: 'column', sm: 'row' }}
+      direction={{ base: 'column', md: 'row' }}
       spacing={3}
       align="center"
       justify="center"
