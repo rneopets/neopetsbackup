@@ -4,6 +4,7 @@ import {
   Image,
   Button,
   HStack,
+  Stack,
   useColorModeValue,
   Skeleton,
 } from '@chakra-ui/react';
@@ -23,48 +24,53 @@ const EnterNeopetName = props => {
   const blue = useColorModeValue('blue.300', 'blue.500');
 
   return (
-    <HStack
+    <Stack
+      direction={{ base: 'column', md: 'row' }}
       spacing={3}
+      align="center"
       justify="center"
-      flexWrap={{ base: 'wrap', sm: 'nowrap' }}
     >
-      <Image
-        src={`http://pets.neopets.com/cpn/${petName}/1/6.png`}
-        title={petName}
-        fallback={
-          <Skeleton w="70px" h="70px" borderRadius="xl" flexShrink={0} />
-        }
-        borderRadius="xl"
-        w="70px"
-        h="70px"
-        flexShrink={0}
-        onLoad={() => setCanDownload(true)}
-      />
-      <Input
-        width={{ base: '140px', sm: '200px', md: '400px', lg: '500px' }}
-        borderColor={green}
-        value={petName}
-        onChange={handlePetNameChange}
-        placeholder="Enter a Neopet's name"
-        onKeyPress={e => e.key === 'Enter' && saveSnapshot(petName)}
-      />
-      <Button
-        disabled={!petName || !canDownload}
-        onClick={() => saveSnapshot(petName)}
-        bgColor={blue}
-        flexShrink={0}
-      >
-        Save
-      </Button>
-      <Button
-        disabled={!petName || !canDownload}
-        onClick={() => getSci(petName)}
-        bgColor={green}
-        flexShrink={0}
-      >
-        Download
-      </Button>
-    </HStack>
+      <HStack spacing={3}>
+        <Image
+          src={`http://pets.neopets.com/cpn/${petName}/1/6.png`}
+          title={petName}
+          fallback={
+            <Skeleton w="70px" h="70px" borderRadius="xl" flexShrink={0} />
+          }
+          borderRadius="xl"
+          w="70px"
+          h="70px"
+          flexShrink={0}
+          onLoad={() => setCanDownload(true)}
+        />
+        <Input
+          width={{ base: '200px', md: '400px', lg: '500px' }}
+          borderColor={green}
+          value={petName}
+          onChange={handlePetNameChange}
+          placeholder="Enter a Neopet's name"
+          onKeyPress={e => e.key === 'Enter' && saveSnapshot(petName)}
+        />
+      </HStack>
+      <HStack spacing={3}>
+        <Button
+          disabled={!petName || !canDownload}
+          onClick={() => saveSnapshot(petName)}
+          bgColor={blue}
+          flexShrink={0}
+        >
+          Save
+        </Button>
+        <Button
+          disabled={!petName || !canDownload}
+          onClick={() => getSci(petName)}
+          bgColor={green}
+          flexShrink={0}
+        >
+          Download
+        </Button>
+      </HStack>
+    </Stack>
   );
 };
 
