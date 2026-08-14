@@ -151,6 +151,14 @@ function App() {
     });
   };
 
+  const deleteAllSCIEntries = (petName) => {
+    const normalizedName = petName.toLowerCase();
+    setSciHistory(prev => {
+      const { [normalizedName]: removed, ...rest } = prev;
+      return rest;
+    });
+  };
+
   const importSCIHistory = (importedData, overwrite = false) => {
     if (overwrite) {
       // Overwrite entire history with imported data
@@ -340,6 +348,7 @@ function App() {
       <HistorySidebar
         sciHistory={sciHistory}
         onDeleteEntry={deleteSCIEntry}
+        onDeleteAllEntries={deleteAllSCIEntries}
         onImport={importSCIHistory}
         onRedownload={redownloadPet}
         onDownloadCurrent={async petName => {
