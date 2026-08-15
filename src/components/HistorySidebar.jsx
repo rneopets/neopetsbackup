@@ -41,6 +41,7 @@ import {
   useBreakpointValue,
   RadioGroup,
   Radio,
+  Input,
 } from '@chakra-ui/react';
 import {
   FaTrash,
@@ -191,6 +192,7 @@ const HoverableCard = ({
 const HistorySidebar = ({
   sciHistory,
   onDeleteEntry,
+  onDeleteAllEntries,
   onImport,
   onRedownload,
   onDownloadCurrent,
@@ -215,6 +217,11 @@ const HistorySidebar = ({
     onClose: onDeleteClose,
   } = useDisclosure();
   const {
+    isOpen: isDeleteAllOpen,
+    onOpen: onDeleteAllOpen,
+    onClose: onDeleteAllClose,
+  } = useDisclosure();
+  const {
     isOpen: isGalleryOpen,
     onOpen: onGalleryOpen,
     onClose: onGalleryClose,
@@ -223,6 +230,8 @@ const HistorySidebar = ({
   const [importMode, setImportMode] = React.useState('merge');
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [deleteTarget, setDeleteTarget] = React.useState(null);
+  const [deleteAllTarget, setDeleteAllTarget] = React.useState(null);
+  const [deleteAllConfirmText, setDeleteAllConfirmText] = React.useState('');
   const [cooldowns, setCooldowns] = React.useState({});
   const cancelRef = React.useRef();
   const galleryScrollRef = React.useRef();
@@ -286,6 +295,28 @@ const HistorySidebar = ({
       setDeleteTarget(null);
     }
     onDeleteClose();
+  };
+
+  const handleDeleteAllClick = (petName) => {
+    setDeleteAllTarget(petName);
+    setDeleteAllConfirmText('');
+    onDeleteAllOpen();
+  };
+
+  const handleDeleteAllConfirm = () => {
+    if (deleteAllTarget && deleteAllConfirmText.toLowerCase() === deleteAllTarget.toLowerCase()) {
+      onDeleteAllEntries(deleteAllTarget);
+      toast({
+        status: 'success',
+        title: `All entries deleted for ${deleteAllTarget}`,
+        duration: 2000,
+        isClosable: true,
+      });
+      setSelectedPet(null);
+      setDeleteAllTarget(null);
+      setDeleteAllConfirmText('');
+    }
+    onDeleteAllClose();
   };
 
   const handleExport = () => {
@@ -703,6 +734,15 @@ const HistorySidebar = ({
               ))}
             </VStack>
           )}
+          <Divider />
+          <Button
+            colorScheme="red"
+            leftIcon={<FaTrash />}
+            onClick={() => handleDeleteAllClick(selectedPet)}
+            isDisabled={selectedPetEntries.length === 0}
+          >
+            Delete All Entries
+          </Button>
         </>
       ) : (
         // List view
@@ -998,6 +1038,54 @@ const HistorySidebar = ({
               </Button>
               <Button colorScheme="red" onClick={handleDeleteConfirm} ml={3}>
                 Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+
+      {/* Delete All Confirmation Dialog */}
+      <AlertDialog
+        isOpen={isDeleteAllOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={() => {
+          setDeleteAllConfirmText('');
+          onDeleteAllClose();
+        }}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete All Entries for {deleteAllTarget}
+            </AlertDialogHeader>
+            <AlertDialogBody>
+              <Text mb={3}>
+                Are you sure you want to delete{' '}
+                <Text as="span" fontWeight="bold">
+                  all {selectedPetEntries.length} entries
+                </Text>{' '}
+                for {deleteAllTarget}? This action cannot be undone.
+              </Text>
+              <Text fontSize="sm" color="gray.500" mb={2}>
+                Type <code>{deleteAllTarget}</code> to confirm:
+              </Text>
+              <Input
+                value={deleteAllConfirmText}
+                onChange={e => setDeleteAllConfirmText(e.target.value)}
+                placeholder={deleteAllTarget}
+              />
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onDeleteAllClose}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={handleDeleteAllConfirm}
+                ml={3}
+                isDisabled={deleteAllConfirmText.toLowerCase() !== deleteAllTarget?.toLowerCase()}
+              >
+                Delete All
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
